@@ -63,7 +63,6 @@ class _RoleSelectorState extends State<RoleSelector> {
       case 'Doctor':
         return DoctorDashboard();
         break;
-
       default:
         return Center(
           child: SizedBox(height: 50, width: 50, child: CircularProgressIndicator()),
