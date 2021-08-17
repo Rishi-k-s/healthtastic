@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/analyticsreporting/v4.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:healthtastic/common/textstyles.dart';
 import 'package:healthtastic/models/calModel.dart';
@@ -26,10 +27,11 @@ class _CreateAppoinState extends State<CreateAppoin> {
   late TextEditingController textControllerStartTime;
   late TextEditingController textControllerEndTime;
 
-  String? title;
-  String? desc;
-  String? location;
-  String? allergies;
+  String title = '';
+  String docName = '';
+  String desc = '';
+  String location = '';
+  String allergies = '';
 
   _selectDate(BuildContext context) async {
     final DateTime picked = (await showDatePicker(
@@ -135,6 +137,55 @@ class _CreateAppoinState extends State<CreateAppoin> {
                   filled: true,
                 ),
               ),
+              Container(
+                  height: 30.9,
+                  width: 100.0,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      // backgroundColor: MaterialStateProperty.all<Color>(Color(0xffEC5F5F)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Color(0xff1ecbe1)),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        int startTimeInEpoch = DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ).millisecondsSinceEpoch;
+
+                        int endTimeInEpoch = DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ).millisecondsSinceEpoch;
+
+                        await calendarClient
+                            .insert(
+                          title: title,
+                          description: desc,
+                          location: location,
+                          docName: docName,
+                          allergies: allergies,
+                          hasConferenceSupport: true,
+                          shouldNotifyAttendees: false,
+                          startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
+                          endTime: DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch),
+                        )
+                            .then(((eventData) async {
+                          String eventId = eventData['id']!;
+                          String eventLink = eventData['link']!;
+                        }));
+                      }
+                    },
+                    child: Text(
+                      'Register',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  )),
             ],
           )),
     );
