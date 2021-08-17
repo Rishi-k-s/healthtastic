@@ -58,7 +58,7 @@ class _RoleSelectorState extends State<RoleSelector> {
     print(role + " is role from firebase");
     switch (role) {
       case 'Patient':
-        return DashboardForPatient();
+        return PatientDashboard();
         break;
       case 'Doctor':
         return DoctorDashboard();
