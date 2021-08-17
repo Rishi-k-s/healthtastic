@@ -6,6 +6,7 @@ class EventInfo {
   final String description;
   final String location;
   final String link;
+  final String docUid;
   final String docName;
   final String allergies;
   final List<dynamic> attendeeEmails;
@@ -27,6 +28,7 @@ class EventInfo {
     required this.hasConfereningSupport,
     required this.startTimeInEpoch,
     required this.endTimeInEpoch,
+    required this.docUid,
   });
 
   EventInfo.fromMap(Map snapshot)
@@ -41,6 +43,7 @@ class EventInfo {
         shouldNotifyAttendees = snapshot['should_notify'],
         hasConfereningSupport = snapshot['has_conferencing'],
         startTimeInEpoch = snapshot['start'],
+        docUid = snapshot['docUid'],
         endTimeInEpoch = snapshot['end'];
 
   toJson() {
@@ -57,6 +60,7 @@ class EventInfo {
       'has_conferencing': hasConfereningSupport,
       'start': startTimeInEpoch,
       'end': endTimeInEpoch,
+      'docUid': docUid,
     };
   }
 }

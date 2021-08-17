@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/analyticsreporting/v4.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -6,6 +7,7 @@ import 'package:healthtastic/main_UI/Patient/PatientDetails.dart';
 import 'package:healthtastic/models/calModel.dart';
 import 'package:healthtastic/gogl%20cal/calDatabase.dart';
 import 'package:healthtastic/gogl%20cal/calhelper.dart';
+import 'package:healthtastic/services/database.dart';
 import 'package:intl/intl.dart';
 
 class CreateAppoin extends StatefulWidget {
@@ -30,6 +32,7 @@ class _CreateAppoinState extends State<CreateAppoin> {
 
   String title = '';
   String docName = '';
+  String docUid = '';
   String desc = '';
   String location = '';
   String allergies = '';
@@ -176,6 +179,7 @@ class _CreateAppoinState extends State<CreateAppoin> {
                             description: desc,
                             location: location,
                             docName: docName,
+                            docUid: docUid,
                             allergies: allergies,
                             hasConferenceSupport: true,
                             shouldNotifyAttendees: true,
@@ -201,6 +205,7 @@ class _CreateAppoinState extends State<CreateAppoin> {
                               hasConfereningSupport: true,
                               startTimeInEpoch: startTimeInEpoch,
                               endTimeInEpoch: endTimeInEpoch,
+                              docUid: docUid,
                             );
 
                             await storage.storeEventData(eventInfo).whenComplete(() => Navigator.of(context).pop());

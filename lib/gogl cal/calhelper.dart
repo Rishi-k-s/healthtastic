@@ -9,6 +9,7 @@ class CalendarClient {
     required String description,
     required String location,
     required String docName,
+    required String docUid,
     required String allergies,
     required bool hasConferenceSupport,
     required DateTime startTime,

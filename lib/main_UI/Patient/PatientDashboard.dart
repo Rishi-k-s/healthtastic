@@ -7,6 +7,7 @@ import 'package:healthtastic/main_UI/Patient/createP2P.dart';
 import 'package:healthtastic/models/calModel.dart';
 import 'package:healthtastic/services/authService.dart';
 import 'package:healthtastic/gogl%20cal/calhelper.dart';
+import 'package:healthtastic/services/database.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,6 +19,22 @@ class PatientDashboard extends StatefulWidget {
 class _PatientDashboardState extends State<PatientDashboard> {
   Storage storage = Storage();
   int _currentIndex = 0;
+  List<String> uidList = <String>[];
+  Future<void> getDocData() async {
+    List<String> doctorUidFromFirestore = await UserHelper.getDoctorUid();
+    setState(() {
+      uidList = doctorUidFromFirestore;
+    });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      getDocData();
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

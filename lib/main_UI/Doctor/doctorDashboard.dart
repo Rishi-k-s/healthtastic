@@ -16,6 +16,7 @@ class DoctorDashboard extends StatefulWidget {
 
 class _DoctorDashboardState extends State<DoctorDashboard> {
   Storage storage = Storage();
+  String? docUid;
   int _currentIndex = 0;
 
   @override
@@ -60,6 +61,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.docs.length > 0) {
+                  if (snapshot.data!.docs.contains('$docUid')) {}
                   return ListView.builder(
                     physics: BouncingScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
@@ -223,7 +225,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             backgroundColor: Colors.lightBlue[900],
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.edit),
             label: 'New',
             backgroundColor: Colors.lightBlue[900],
           ),
