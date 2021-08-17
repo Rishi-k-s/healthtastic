@@ -137,13 +137,16 @@ class _CreateAppoinState extends State<CreateAppoin> {
                   filled: true,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
               Container(
-                  height: 30.9,
+                  height: 40.9,
                   width: 100.0,
                   child: TextButton(
                     style: ButtonStyle(
-                      // backgroundColor: MaterialStateProperty.all<Color>(Color(0xffEC5F5F)),
-                      foregroundColor: MaterialStateProperty.all<Color>(Color(0xff1ecbe1)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xffEC5F5F)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
