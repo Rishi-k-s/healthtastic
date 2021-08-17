@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:healthtastic/gogl%20cal/calDatabase.dart';
+import 'package:healthtastic/main_UI/Patient/PatientDetails.dart';
+import 'package:healthtastic/main_UI/Patient/createP2P.dart';
 import 'package:healthtastic/models/calModel.dart';
 import 'package:healthtastic/services/authService.dart';
 import 'package:healthtastic/gogl%20cal/calhelper.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DoctorDashboard extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class DoctorDashboard extends StatefulWidget {
 
 class _DoctorDashboardState extends State<DoctorDashboard> {
   Storage storage = Storage();
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,17 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
           ),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   // backgroundColor: CustomColor.dark_cyan,
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.of(context).push(
+      //       MaterialPageRoute(
+      //         builder: (context) => CreateAppoin(),
+      //       ),
+      //     );
+      //   },
+      // ),
       body: Padding(
         padding: const EdgeInsets.only(
           left: 16.0,
@@ -76,7 +91,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                   right: 16.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  // color: CustomColor.neon_green.withOpacity(0.3),
+                                  color: Colors.blueGrey,
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 child: Column(
@@ -85,7 +100,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                     Text(
                                       event.name,
                                       style: TextStyle(
-                                        // color: CustomColor.dark_blue,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22,
                                         letterSpacing: 1,
@@ -97,7 +112,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        color: Colors.black38,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                         letterSpacing: 1,
@@ -106,13 +121,23 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                     SizedBox(height: 10),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                                      child: Text(
-                                        event.link,
-                                        style: TextStyle(
-                                          // color: CustomColor.dark_blue.withOpacity(0.5),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          letterSpacing: 0.5,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          if (await canLaunch(event.link)) {
+                                            CircularProgressIndicator();
+                                            await launch(event.link);
+                                          } else {
+                                            throw 'Could not launch $event.link';
+                                          }
+                                        },
+                                        child: Text(
+                                          event.link,
+                                          style: TextStyle(
+                                            color: Colors.blue[400],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            letterSpacing: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -137,16 +162,16 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                                 letterSpacing: 1.5,
+                                                color: Colors.white,
                                               ),
                                             ),
                                             Text(
                                               '$startTimeString - $endTimeString',
                                               style: TextStyle(
-                                                // color: CustomColor.dark_cyan,
-                                                fontFamily: 'OpenSans',
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
-                                                letterSpacing: 1.5,
+                                                letterSpacing: 1,
                                               ),
                                             ),
                                           ],
@@ -185,6 +210,49 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             },
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.teal[800],
+        currentIndex: _currentIndex,
+        selectedFontSize: 15,
+        unselectedFontSize: 12,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'New',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Settings',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+        ],
+        onTap: (index) {
+          print(_currentIndex);
+          setState(() {
+            _currentIndex = index;
+          });
+          if (index == 1) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CreateAppoin(),
+              ),
+            );
+          }
+          if (index == 2) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PatientDetalsScreen(),
+              ),
+            );
+          }
+        },
       ),
     );
   }

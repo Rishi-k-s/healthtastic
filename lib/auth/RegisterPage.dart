@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String error = '';
   String email = '';
   String name = '';
-  String role = 'Patient';
+  String? role;
   String aadhaar = '';
   String password = '';
   String dropdownValue = 'Patient';

@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:healthtastic/common/textstyles.dart';
 import 'package:healthtastic/gogl%20cal/calDatabase.dart';
-import 'package:healthtastic/main_UI/createP2P.dart';
+import 'package:healthtastic/main_UI/Patient/PatientDetails.dart';
+import 'package:healthtastic/main_UI/Patient/createP2P.dart';
 import 'package:healthtastic/models/calModel.dart';
 import 'package:healthtastic/services/authService.dart';
 import 'package:healthtastic/gogl%20cal/calhelper.dart';
@@ -16,6 +17,7 @@ class PatientDashboard extends StatefulWidget {
 
 class _PatientDashboardState extends State<PatientDashboard> {
   Storage storage = Storage();
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +37,17 @@ class _PatientDashboardState extends State<PatientDashboard> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        // backgroundColor: CustomColor.dark_cyan,
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => CreateAppoin(),
-            ),
-          );
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   // backgroundColor: CustomColor.dark_cyan,
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.of(context).push(
+      //       MaterialPageRoute(
+      //         builder: (context) => CreateAppoin(),
+      //       ),
+      //     );
+      //   },
+      // ),
       body: Padding(
         padding: const EdgeInsets.only(
           left: 16.0,
@@ -209,6 +211,49 @@ class _PatientDashboardState extends State<PatientDashboard> {
             },
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.teal[800],
+        currentIndex: _currentIndex,
+        selectedFontSize: 15,
+        unselectedFontSize: 12,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'New',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Settings',
+            backgroundColor: Colors.lightBlue[900],
+          ),
+        ],
+        onTap: (index) {
+          print(_currentIndex);
+          setState(() {
+            _currentIndex = index;
+          });
+          if (index == 1) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CreateAppoin(),
+              ),
+            );
+          }
+          if (index == 2) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PatientDetalsScreen(),
+              ),
+            );
+          }
+        },
       ),
     );
   }

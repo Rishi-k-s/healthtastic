@@ -132,7 +132,7 @@ class _SignInLogInPageState extends State<SignInLogInPage> {
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       Container(
-                          height: 30.9,
+                          height: 40.9,
                           width: 100.0,
                           child: TextButton(
                             style: ButtonStyle(
@@ -150,6 +150,9 @@ class _SignInLogInPageState extends State<SignInLogInPage> {
                               style: TextStyle(fontSize: 20),
                             ),
                           )),
+                      SizedBox(
+                        height: 10.0,
+                      ),
                     ],
                   ),
                 ),

@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'gogl cal/calhelper.dart';
 import 'dataSecrets.dart';
 import 'dart:io' show Platform;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,11 @@ Future<void> main() async {
 
   var _clientID = new ClientId(Secret.getId(), "");
   const _scopes = const [cal.CalendarApi.calendarScope];
+
   await clientViaUserConsent(_clientID, _scopes, prompt).then((AuthClient client) async {
     CalendarClient.calendar = cal.CalendarApi(client);
+    print(' chnggg $_clientID');
+    print('chnggg $_scopes');
   });
 
   runApp(MyApp());
