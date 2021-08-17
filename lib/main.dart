@@ -9,11 +9,11 @@ import 'package:googleapis/calendar/v3.dart' as cal;
 import 'package:url_launcher/url_launcher.dart';
 import 'gogl cal/calhelper.dart';
 import 'dataSecrets.dart';
-// import 'dart:io' show Platform;
+import 'dart:io' show Platform;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized;
-  await Firebase.initializeApp;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   var _clientID = new ClientId(Secret.getId(), "");
   const _scopes = const [cal.CalendarApi.calendarScope];

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:healthtastic/auth/RegisterPage.dart';
 import '../services/authService.dart';

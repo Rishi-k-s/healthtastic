@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183839496109",
+    "project_id": "healthtastic-79d5d",
+    "storage_bucket": "healthtastic-79d5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183839496109:android:4275c3189369d78e53b324",
+        "android_client_info": {
+          "package_name": "com.example.healthtastic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183839496109-1j13765dfv5hrl24qd2t5ioggj7hr3kf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgJs5VmJKMGtSOFje-PTEiJoX7_hlFeks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183839496109-1j13765dfv5hrl24qd2t5ioggj7hr3kf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
