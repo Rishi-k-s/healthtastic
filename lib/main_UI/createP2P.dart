@@ -174,13 +174,32 @@ class _CreateAppoinState extends State<CreateAppoin> {
                           docName: docName,
                           allergies: allergies,
                           hasConferenceSupport: true,
-                          shouldNotifyAttendees: false,
+                          shouldNotifyAttendees: true,
                           startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
                           endTime: DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch),
                         )
                             .then(((eventData) async {
                           String eventId = eventData['id']!;
                           String eventLink = eventData['link']!;
+
+                          List<String> emails = [];
+
+                          EventInfo eventInfo = EventInfo(
+                            id: eventId,
+                            name: title,
+                            description: desc,
+                            location: location,
+                            link: eventLink,
+                            docName: docName,
+                            allergies: allergies,
+                            attendeeEmails: emails,
+                            shouldNotifyAttendees: true,
+                            hasConfereningSupport: true,
+                            startTimeInEpoch: startTimeInEpoch,
+                            endTimeInEpoch: endTimeInEpoch,
+                          );
+
+                          await storage.storeEventData(eventInfo).whenComplete(() => Navigator.of(context).pop());
                         }));
                       }
                     },

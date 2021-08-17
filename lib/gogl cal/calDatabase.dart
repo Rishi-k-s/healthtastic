@@ -7,7 +7,7 @@ final CollectionReference mainCollection = FirebaseFirestore.instance.collection
 final DocumentReference documentReference = mainCollection.doc('data');
 
 class Storage {
-  Future<void> storeEventData(EventInfo eventInfo, String userUid) async {
+  Future<void> storeEventData(EventInfo eventInfo) async {
     DocumentReference documentReferencer = documentReference.collection('liveAppoinments').doc(eventInfo.id);
 
     Map<String, dynamic> data = eventInfo.toJson();

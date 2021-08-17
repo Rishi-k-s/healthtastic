@@ -7,6 +7,7 @@ import 'package:healthtastic/models/calModel.dart';
 import 'package:healthtastic/services/authService.dart';
 import 'package:healthtastic/gogl%20cal/calhelper.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PatientDashboard extends StatefulWidget {
   @override
@@ -89,7 +90,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                   right: 16.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  // color: CustomColor.neon_green.withOpacity(0.3),
+                                  color: Colors.blueGrey,
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 child: Column(
@@ -98,7 +99,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                     Text(
                                       event.name,
                                       style: TextStyle(
-                                        // color: CustomColor.dark_blue,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22,
                                         letterSpacing: 1,
@@ -110,7 +111,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        color: Colors.black38,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                         letterSpacing: 1,
@@ -119,13 +120,23 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                     SizedBox(height: 10),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                                      child: Text(
-                                        event.link,
-                                        style: TextStyle(
-                                          // color: CustomColor.dark_blue.withOpacity(0.5),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          letterSpacing: 0.5,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          if (await canLaunch(event.link)) {
+                                            CircularProgressIndicator();
+                                            await launch(event.link);
+                                          } else {
+                                            throw 'Could not launch $event.link';
+                                          }
+                                        },
+                                        child: Text(
+                                          event.link,
+                                          style: TextStyle(
+                                            color: Colors.blue[400],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            letterSpacing: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -150,16 +161,16 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                                 letterSpacing: 1.5,
+                                                color: Colors.white,
                                               ),
                                             ),
                                             Text(
                                               '$startTimeString - $endTimeString',
                                               style: TextStyle(
-                                                // color: CustomColor.dark_cyan,
-                                                fontFamily: 'OpenSans',
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
-                                                letterSpacing: 1.5,
+                                                letterSpacing: 1,
                                               ),
                                             ),
                                           ],
