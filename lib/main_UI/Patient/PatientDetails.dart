@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthtastic/common/textstyles.dart';
 import 'package:healthtastic/main_UI/Patient/PatientDashboard.dart';
 import 'package:healthtastic/main_UI/Patient/createP2P.dart';
 import 'package:healthtastic/services/authService.dart';
@@ -12,8 +13,13 @@ class PatientDetalsScreen extends StatefulWidget {
 }
 
 class _PatientDetalsScreenState extends State<PatientDetalsScreen> {
-  int _currentIndex = 2;
+  String? name;
+  String? aadaar;
+  String? allergies;
+  String? history;
 
+  int _currentIndex = 2;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +38,31 @@ class _PatientDetalsScreenState extends State<PatientDetalsScreen> {
           SizedBox(
             height: 20.0,
           ),
+          Form(
+              key: _formKey,
+              child: (Column(
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    style: commontextstyle,
+                    validator: (val) => val!.isEmpty ? 'Required' : null,
+                    onChanged: (val) {
+                      setState(() => name = val);
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email),
+                      hintText: 'Name',
+                      hintStyle: commontextstyle,
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('$aadaar')
+                ],
+              )))
         ],
       ),
     );

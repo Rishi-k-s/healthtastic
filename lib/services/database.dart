@@ -11,14 +11,19 @@ class UserHelper {
 
   static FirebaseAuth auth = FirebaseAuth.instance;
   static FirebaseFirestore _database = FirebaseFirestore.instance;
+  final CollectionReference userCollection = _database.collection('users');
 
-  Future<void> addUserRegisToFirebase(String name, String email, String aadar, String uid, String role) async {
+  Future<void> addUserRegisToFirebase(String name, String email, String aadar, String uid, String role, String docType, String minCost) async {
+    final User user = auth.currentUser!;
+    final uid = user.uid;
     return await _database.collection('users').doc(uid).set({
       "name": name,
       "email": email,
       "uid": uid,
       "aadar": aadar,
       "Role": role,
+      "type": docType,
+      "minCost": minCost,
     });
   }
 
@@ -49,7 +54,53 @@ class UserHelper {
       print('uvvvvvv +$uidList');
       return uidList;
     } catch (e) {
+      print(e);
       print('uvvvvvv + null');
+      return null;
+    }
+  }
+
+  // Stream<QuerySnapshot> get doctors {
+  //   return userCollection.snapshots();
+  // }
+
+  // Future getUserDetals() async {
+  //   List itemsList = [];
+  //   try {
+  //     await userCollection.get().then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         if(element.data()!['']){}
+  //         itemsList.add(element.data());
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
+
+}
+
+class DocDetals {
+  static FirebaseAuth auth = FirebaseAuth.instance;
+  static FirebaseFirestore _database = FirebaseFirestore.instance;
+  final CollectionReference userCollection = _database.collection('users');
+
+  Future getUserDetals() async {
+    List itemsList = [];
+    try {
+      await userCollection.get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          if (doc['Role'] == 'Doctor') {
+            itemsList.add(doc.data());
+          } else {
+            itemsList.add('NoDoc');
+          }
+        });
+      });
+      return itemsList;
+    } catch (e) {
+      print(e.toString());
       return null;
     }
   }

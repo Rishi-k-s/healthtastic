@@ -30,13 +30,15 @@ class AuthService {
     String? name,
     String? aadar,
     String? role,
+    String? docType,
+    String? minCost,
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
 
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email!, password: password!);
-      await UserHelper(uid: result.user!.uid).addUserRegisToFirebase(name!, email, aadar!, result.user!.uid, role!);
+      await UserHelper(uid: result.user!.uid).addUserRegisToFirebase(name!, email, aadar!, result.user!.uid, role!, docType!, minCost!);
       // add role to firebase
       return 'SignedUp';
     } on FirebaseAuthException catch (e) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:healthtastic/auth/LoginPage.dart';
 import 'package:healthtastic/main_UI/Patient/PatientDashboard.dart';
 import 'package:healthtastic/main_UI/Doctor/doctorDashboard.dart';
+import 'package:healthtastic/main_UI/Patient/PatientDetails.dart';
 import 'package:healthtastic/services/authService.dart';
 import 'package:healthtastic/services/database.dart';
 

@@ -19,12 +19,14 @@ class _RegisterPageState extends State<RegisterPage> {
   String error = '';
   String email = '';
   String name = '';
-  String? role;
+  String type = '';
+  String minCost = '';
+  String role = 'Patient';
   String aadhaar = '';
   String password = '';
-  String dropdownValue = 'Patient';
   bool hiddenPassword = true;
   bool loading = false;
+  bool docVisibility = false;
 
   void _togglePasswordView() {
     setState(() {
@@ -64,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             setState(() => name = val);
                           },
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(Icons.person_add),
                             hintText: 'Name',
                             hintStyle: commontextstyle,
                             fillColor: Colors.white,
@@ -128,7 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             setState(() => aadhaar = val);
                           },
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
                             hintText: 'Enter your Aadhaar number',
                             hintStyle: commontextstyle,
                             fillColor: Colors.white,
@@ -140,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 10.0,
                       ),
                       DropdownButton<String>(
-                        value: dropdownValue,
+                        value: role,
                         icon: const Icon(Icons.arrow_downward),
                         iconSize: 24,
                         elevation: 16,
@@ -151,7 +152,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         onChanged: (String? newValue) {
                           setState(() {
-                            dropdownValue = newValue!;
+                            role = newValue!;
+                            if (newValue == 'Patient') {
+                              setState(() {
+                                docVisibility = false;
+                              });
+                            } else {
+                              setState(() {
+                                docVisibility = true;
+                              });
+                            }
                           });
                         },
                         items: <String>['Patient', 'Doctor'].map<DropdownMenuItem<String>>((String value) {
@@ -161,6 +171,51 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }).toList(),
                       ),
+                      Visibility(
+                          visible: docVisibility,
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  // height: 56.9,
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    style: commontextstyle,
+                                    validator: (val) => val!.isEmpty ? 'Required' : null,
+                                    onChanged: (val) {
+                                      setState(() => type = val);
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: 'Speciality',
+                                      hintStyle: commontextstyle,
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  // height: 56.9,
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.numberWithOptions(),
+                                    style: commontextstyle,
+                                    validator: (val) => val!.isEmpty ? 'Required' : null,
+                                    onChanged: (val) {
+                                      setState(() => minCost = val);
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: 'Minimum fees',
+                                      hintStyle: commontextstyle,
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
                       SizedBox(
                         height: 17.0,
                       ),
@@ -176,7 +231,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (_formKey.currentState!.validate()) {
                                   setState(() => loading = true);
                                   dynamic result = await _auth.registerWithEmailPasswordStudent(
-                                      email: email, password: password, aadar: aadhaar, name: name, role: role);
+                                      email: email,
+                                      password: password,
+                                      aadar: aadhaar,
+                                      name: name,
+                                      role: role,
+                                      docType: type,
+                                      minCost: 'Rs.' + minCost);
                                   if (result == null) {
                                     setState(() {
                                       loading = false;

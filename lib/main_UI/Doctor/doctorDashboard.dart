@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:healthtastic/gogl%20cal/calDatabase.dart';
+import 'package:healthtastic/main_UI/Doctor/DocDetails.dart';
 import 'package:healthtastic/main_UI/Patient/PatientDetails.dart';
 import 'package:healthtastic/main_UI/Patient/createP2P.dart';
 import 'package:healthtastic/models/calModel.dart';
@@ -27,7 +28,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
-          color: Colors.grey, //change your color here
+          color: Colors.grey,
         ),
         title: Text(
           'Event Details',
@@ -250,7 +251,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
           if (index == 2) {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => PatientDetalsScreen(),
+                builder: (context) => DoctorDetailsPage(),
               ),
             );
           }
