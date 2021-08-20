@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/calendar/v3.dart' as cal;
 import 'package:url_launcher/url_launcher.dart';
-import 'gogl cal/calhelper.dart';
+import 'package:healthtastic/goglcal/calhelper.dart';
 import 'dataSecrets.dart';
 import 'dart:io' show Platform;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +17,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   var _clientID = new ClientId(Secret.getId(), "");
-  const _scopes = const [cal.CalendarApi.calendarScope];
+  const _scopes = const [
+    cal.CalendarApi.calendarScope
+  ];
 
   await clientViaUserConsent(_clientID, _scopes, prompt).then((AuthClient client) async {
     CalendarClient.calendar = cal.CalendarApi(client);
